@@ -189,54 +189,34 @@ class LegendControl {
       this.map = map;
       this.container = document.createElement('div');
       this.container.className = 'legend-control mapboxgl-ctrl-group maplibregl-ctrl mapboxgl-ctrl';
-      let table = document.createElement('table');
+      let legend = document.createElement('div');
+      legend.className = 'legend';
 
-      let li1 = document.createElement('tr');
-      let circle1 = document.createElement('td');
-      let label1 = document.createElement('td');
-      circle1.innerHTML = `<div class="circle" style="background-color:#74ae36;color:#74ae36;"></div>`
-      label1.innerHTML = `Digital Farming`
-      li1.append(circle1,label1)
+      let title = document.createElement('h4');
+      title.innerText = 'Company Category';
+      legend.append(title)
 
-      let li2 = document.createElement('tr');
-      let circle2 = document.createElement('td');
-      let label2 = document.createElement('td');
-      circle2.innerHTML = `<div class="circle" style="background-color:#ff5252;color:#ff5252;"></div>`
-      label2.innerHTML = `Earth Observation`
-      li2.append(circle2,label2)
+      let li1 = document.createElement('div');
+      li1.innerHTML = `<span style="background-color: #723122"></span>Digital Farming`
 
-      let li3 = document.createElement('tr');
-      let circle3 = document.createElement('td');
-      let label3 = document.createElement('td');
-      circle3.innerHTML = `<div class="circle" style="background-color:#ffe900;color:#ffe900;"></div>`
-      label3.innerHTML = `GIS / Spatial Analysis`
-      li3.append(circle3,label3)
+      let li2 = document.createElement('div');
+      li2.innerHTML = `<span style="background-color: #ff5252"></span>Earth Observation`
 
-      let li4 = document.createElement('tr');
-      let circle4 = document.createElement('td');
-      let label4 = document.createElement('td');
-      circle4.innerHTML = `<div class="circle" style="background-color:#757575;color:#757575;"></div>`
-      label4.innerHTML = `Satellite Operator`
-      li4.append(circle4,label4)
+      let li3 = document.createElement('div');
+      li3.innerHTML = `<span style="background-color: #ffe900"></span>GIS / Spatial Analysis`
 
-      let li5 = document.createElement('tr');
-      let circle5 = document.createElement('td');
-      let label5 = document.createElement('td');
-      circle5.innerHTML = `<div class="circle" style="background-color:#048ad1;color:#048ad1;"></div>`
-      label5.innerHTML = `UAV / Aerial`
-      li5.append(circle5,label5)
+      let li4 = document.createElement('div');
+      li4.innerHTML = `<span style="background-color: #757575"></span>Satellite Operator`
 
-      let li6 = document.createElement('tr');
-      let circle6 = document.createElement('td');
-      let label6 = document.createElement('td');
-      circle6.innerHTML = `<div class="circle" style="background-color:#f57801;color:#f57801;"></div>`
-      label6.innerHTML = `Webmap / Cartography`
-      li6.append(circle6,label6)
+      let li5 = document.createElement('div');
+      li5.innerHTML = `<span style="background-color: #048ad1"></span>UAV / Aerial`
+
+      let li6 = document.createElement('div');
+      li6.innerHTML = `<span style="background-color: #f57801"></span>Webmap / Cartography`
       
-      table.append(li1,li2,li3,li4,li5,li6)
+      legend.append(li1,li2,li3,li4,li5,li6)
 
-
-      this.container.append(table)
+      this.container.append(legend)
       return this.container;
     }
     onRemove(){
