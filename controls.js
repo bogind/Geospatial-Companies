@@ -48,7 +48,7 @@ class AddCompanyButton {
       this.container.innerHTML = '<button><b>+</b></button>';
       this.container.title = "Add a Company"
       this.container.value = 0;
-      this.container.onclick = addPointLocation
+      this.container.onclick = ToggleForm
       return this.container;
     }
     onRemove(){
@@ -76,3 +76,4 @@ class AddCompanyControl {
 
 let legendControl = new LegendControl();
 let addCompanyButton = new AddCompanyButton();
+let addCompanyControl = new AddCompanyControl();

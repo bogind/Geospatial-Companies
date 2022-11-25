@@ -31,21 +31,12 @@
     color: green;
 }
 .add-control {
-
+    padding: 5px;
 }
-.circle{
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    padding: 2px;
+.form-span{
+    margin: 3px;
+    line-height: 1em;
 
-    background: #fff;
-    /*border: 2px solid #666;*/
-    color: #666;
-    text-align: center;
-}
-td {
-    font-size: small;
 }
 .maplibregl-popup-content > h2{
     margin-top: 5px;

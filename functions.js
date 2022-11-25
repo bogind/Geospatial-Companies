@@ -76,6 +76,8 @@ function addEvents(){
         hoveredStateId = null;
     });
 
+    map.on('click', getMapclick)
+
     map.on('click', 'companies', (e) => {
         const feature = e.features[0]
         const coordinates = feature.geometry.coordinates.slice();
@@ -103,47 +105,163 @@ function addEvents(){
         
 }
 
+function refreshData(){
+    fetch(layerUrl)
+    .then(res => res.json())
+    .then(data => {
+        map.getSource('companies').setData(data)
+    })
+}
+
 let currentParameters ={
-    user:'',
-    lng:0.0,
+    name:'',
     lat:0.0,
-    ITM_x:0.0,
-    ITM_y:0.0,
-    merhav_k:0,
-    merhav_t:'',
-    n_trees:0,
-    hakshata_k:0,
-    hakshata_t:'',
-    address_t:'',
-    earot:'',
-    type_k:'',
-    type_t:''
+    lon:0.0,
+    description:'',
+    ex_name:'',
+    office_Size:'',
+    country:'',
+    category:'',
+    focus:'',
+    website:'',
+    city:'',
+    address:''
 }
 const fieldNames = {
-    user:'משתמש',
-    lng:'קו אורך',
-    lat:'קו רוחב',
-    ITM_x:'X רשת ישראל',
-    ITM_y:'Y רשת ישראל',
-    merhav_k:'קוד מרחב',
-    merhav_t:'תיאור מרחב',
-    n_trees:"מס' עצים",
-    hakshata_k:'קוד הקשתה',
-    hakshata_t:'תיאור הקשתה',
-    address_t:'כתובת',
-    earot:'הערות',
-    type_k:'קוד סוג',
-    type_t:'תיאור סוג'
+    name:'Name',
+    lat:'Latitude',
+    lon:'Longitude',
+    description:'Description',
+    ex_name:'Notes - ex_name',
+    office_Size:'Office_Size',
+    country:'Country',
+    category:'Category',
+    focus:'Focus',
+    website:'Website',
+    city:'City',
+    address:'Address'
 }
 
-function addPointLocation(){
+function ToggleForm(){
+    if(map.hasControl(addCompanyControl)){
+        map.removeControl(addCompanyControl)
+    }else{
+        map.addControl(addCompanyControl)
+    }
+}
 
+function getMapclick(e){
+    // if after use of add point button, then get coords and open form
+    if(waitForClick===1){
+        waitForClick=0;
+        currentLngLat = e.lngLat;
+        currentParameters.lat = currentLngLat.lat
+        inputlat.value = currentParameters.lat
+        currentParameters.lon = currentLngLat.lng
+        inputlon.value = currentParameters.lon
+        let inputClick = document.querySelector('.fg-pushpin')
+        inputClick.style.color = '#800'
+
+        
+    };
+};
+
+function addPointLocation(){
+    // tell map to wait for next click
+    waitForClick=1
 }
 
 function buildForm(){
+    
+    let form = document.createElement('form')
+
+    let spanName = document.createElement('span');
+    spanName.classList.add('form-span')
+    let labelName = document.createElement('label');
+    labelName.innerHTML = `<b>${fieldNames['name']}:</b>`;
+    let inputName = document.createElement('input');
+    inputName.type = 'text';
+    inputName.id = 'inputName';
+    spanName.append(labelName,document.createElement('br'),inputName)
+
+    form.append(spanName,document.createElement('br'))
+
+    let spanClick = document.createElement('center');
+    spanClick.classList.add('form-span')
+    let labelClick = document.createElement('label');
+    labelClick.innerHTML = `<b>${fieldNames['name']}:</b>`;
+    let inputClick = document.createElement('button');
+    inputClick.type = 'button';
+    inputClick.id = 'inputClick';
+    inputClick.innerHTML = '<i class="fg-pushpin fg-rotate20 fg-2x" style="color:#666;"></i> ';
+    inputClick.onclick = addPointLocation
+    spanClick.append(labelClick,document.createElement('br'),inputClick)
+
+    form.append(spanClick,document.createElement('br'))
+
+    let spanlat = document.createElement('span');
+    spanlat.classList.add('form-span')
+    let labellat = document.createElement('label');
+    labellat.innerHTML = `<b>${fieldNames['lat']}:</b>`;
+    let inputlat = document.createElement('input');
+    inputlat.type = 'text';
+    inputlat.id = 'inputlat';
+    inputlat.disabled = true;
+    spanlat.append(labellat,document.createElement('br'),inputlat,document.createElement('br'))
+
+    form.append(spanlat,document.createElement('br'))
+
+    let spanlon = document.createElement('span');
+    spanlon.classList.add('form-span')
+    let labellon = document.createElement('label');
+    labellon.innerHTML = `<b>${fieldNames['lon']}:</b>`;
+    let inputlon = document.createElement('input');
+    inputlon.type = 'text';
+    inputlon.id = 'inputlon';
+    inputlon.disabled = true;
+    spanlat.append(labellon,document.createElement('br'),inputlon,document.createElement('br'))
+
+    form.append(spanlon,document.createElement('br'))
+
+
+    let spanSubmit = document.createElement('center');
+    spanSubmit.classList.add('form-span')
+    let inputSubmit = document.createElement('input');
+    inputSubmit.type = 'button';
+    inputSubmit.id = 'inputSubmit';
+    inputSubmit.value = 'Submit';
+    inputSubmit.onclick = submitForm
+    spanSubmit.append(inputSubmit)
+
+    form.append(spanSubmit)
+
+    return form
 
 }
 
 function submitForm(){
+    currentParameters.name = document.getElementById('inputName').value 
+    currentParameters.lon = currentLngLat.lng ? currentLngLat.lng : 0.0;
+    currentParameters.lat = currentLngLat.lat ?  currentLngLat.lat : 0.0;
+    
+    
+    let urlParams = "?";
+    for (var key in currentParameters) {
+        if (urlParams != "") {
+            urlParams += "&";
+        }
+        urlParams += (key + "=" + encodeURIComponent(currentParameters[key]));
+    }
 
+    let url = layerUrl + urlParams
+    
+    fetch(url, {
+        method: 'POST',
+        redirect: 'follow'
+        })
+
+    if(map.hasControl(addCompanyControl)){
+        map.removeControl(addCompanyControl);
+        refreshData()
+        }
 }
