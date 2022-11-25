@@ -3,6 +3,8 @@
 
 A map showing Geospatial companies, data origanilly collected by [chrieke](https://github.com/chrieke) and a list by countries is available at [https://github.com/chrieke/awesome-geospatial-companies](https://github.com/chrieke/awesome-geospatial-companies).  
 
+## <center>[The Live Map](https://bogind.github.io/Geospatial-Companies/)</center>
+
 ## So why make a copy?
 
 * The previous list is hosted on Google MyMaps which doesn't allow additions or comments.
