@@ -132,8 +132,8 @@ const fieldNames = {
     lat:'Latitude',
     lon:'Longitude',
     description:'Description',
-    ex_name:'Notes - ex_name',
-    office_Size:'Office_Size',
+    ex_name:'Notes - Former name',
+    office_Size:'Office Size',
     country:'Country',
     category:'Category',
     focus:'Focus',
@@ -219,9 +219,159 @@ function buildForm(){
     inputlon.type = 'text';
     inputlon.id = 'inputlon';
     inputlon.disabled = true;
-    spanlat.append(labellon,document.createElement('br'),inputlon,document.createElement('br'))
+    spanlat.append(labellon,document.createElement('br'),inputlon)
 
     form.append(spanlon,document.createElement('br'))
+
+    let spanExName = document.createElement('span');
+    spanExName.classList.add('form-span')
+    let labelExName = document.createElement('label');
+    labelExName.innerHTML = `<b>${fieldNames['ex_name']}:</b>`;
+    let inputExName = document.createElement('input');
+    inputExName.type = 'text';
+    inputExName.id = 'inputExName';
+    spanExName.append(labelExName,document.createElement('br'),inputExName)
+
+    form.append(spanExName,document.createElement('br'))
+
+
+    let spanOffice = document.createElement('span');
+    spanOffice.classList.add('form-span')
+    let labelOffice = document.createElement('label');
+    labelOffice.innerHTML = `<b>${fieldNames['office_Size']}:</b>`;
+    let inputOffice = document.createElement('select');
+    inputOffice.name = 'inputOffice';
+    inputOffice.id = 'inputOffice';
+    
+    let optionL = document.createElement('option');
+    optionL.value = 'L'
+    optionL.innerText = 'L'
+    let optionLB = document.createElement('option');
+    optionLB.value = 'L (B)'
+    optionLB.innerText = 'L (B)'
+    let optionLH = document.createElement('option');
+    optionLH.value = 'L (H)'
+    optionLH.innerText = 'L (H)'
+
+    let optionM = document.createElement('option');
+    optionM.value = 'M'
+    optionM.innerText = 'M'
+    let optionMB = document.createElement('option');
+    optionMB.value = 'M (B)'
+    optionMB.innerText = 'M (B)'
+    let optionMH = document.createElement('option');
+    optionMH.value = 'M (H)'
+    optionMH.innerText = 'M (H)'
+
+    let optionS = document.createElement('option');
+    optionS.value = 'S'
+    optionS.innerText = 'S'
+    let optionSB = document.createElement('option');
+    optionSB.value = 'S (B)'
+    optionSB.innerText = 'S (B)'
+    let optionSH = document.createElement('option');
+    optionSH.value = 'S (H)'
+    optionSH.innerText = 'S (H)'
+    inputOffice.append(optionL,optionLB,optionLH,
+        optionM,optionMB,optionMH,
+        optionS,optionSB,optionSH)
+
+    spanOffice.append(labelOffice,document.createElement('br'),inputOffice)
+
+    form.append(spanOffice,document.createElement('br'))
+
+
+    let spanCategory = document.createElement('span');
+    spanCategory.classList.add('form-span')
+    let labelCategory = document.createElement('label');
+    labelCategory.innerHTML = `<b>${fieldNames['category']}:</b>`;
+    let inputCategory = document.createElement('select');
+    inputCategory.name = 'select';
+    inputCategory.id = 'inputCategory';
+
+    let option1 = document.createElement('option');
+    option1.value = 'Digital Farming'
+    option1.innerText = 'Digital Farming'
+
+    let option2 = document.createElement('option');
+    option2.value = 'Earth Observation'
+    option2.innerText = 'Earth Observation'
+
+    let option3 = document.createElement('option');
+    option3.value = 'GIS / Spatial Analysis'
+    option3.innerText = 'GIS / Spatial Analysis'
+
+    let option4 = document.createElement('option');
+    option4.value = 'Satellite Operator'
+    option4.innerText = 'Satellite Operator'
+
+    let option5 = document.createElement('option');
+    option5.value = 'UAV / Aerial'
+    option5.innerText = 'UAV / Aerial'
+
+    let option6 = document.createElement('option');
+    option6.value =  'Webmap / Cartography'
+    option6.innerText =  'Webmap / Cartography'
+
+    inputCategory.append(option1,option2,option3,option4,option5,option6)
+    spanCategory.append(labelCategory,document.createElement('br'),inputCategory)
+
+    form.append(spanCategory,document.createElement('br'))
+
+    let spanWebsite = document.createElement('span');
+    spanWebsite.classList.add('form-span')
+    let labelWebsite = document.createElement('label');
+    labelWebsite.innerHTML = `<b>${fieldNames['website']}:</b>`;
+    let inputWebsite = document.createElement('input');
+    inputWebsite.type = 'text';
+    inputWebsite.id = 'inputWebsite';
+    spanWebsite.append(labelWebsite,document.createElement('br'),inputWebsite)
+
+    form.append(spanWebsite,document.createElement('br'))
+
+    let spanFocus = document.createElement('span');
+    spanFocus.classList.add('form-span')
+    let labelFocus = document.createElement('label');
+    labelFocus.innerHTML = `<b>${fieldNames['focus']}:</b>`;
+    let inputFocus = document.createElement('input');
+    inputFocus.type = 'text';
+    inputFocus.id = 'inputFocus';
+    spanFocus.append(labelFocus,document.createElement('br'),inputFocus)
+
+    form.append(spanFocus,document.createElement('br'))
+    
+    let spanCountry = document.createElement('span');
+    spanCountry.classList.add('form-span')
+    let labelCountry = document.createElement('label');
+    labelCountry.innerHTML = `<b>${fieldNames['country']}:</b>`;
+    let inputCountry = document.createElement('input');
+    inputCountry.type = 'text';
+    inputCountry.id = 'inputCountry';
+    spanCountry.append(labelCountry,document.createElement('br'),inputCountry)
+
+    form.append(spanCountry,document.createElement('br'))
+
+    let spanCity = document.createElement('span');
+    spanCity.classList.add('form-span')
+    let labelCity = document.createElement('label');
+    labelCity.innerHTML = `<b>${fieldNames['city']}:</b>`;
+    let inputCity = document.createElement('input');
+    inputCity.type = 'text';
+    inputCity.id = 'inputCity';
+    spanCity.append(labelCity,document.createElement('br'),inputCity)
+
+    form.append(spanCity,document.createElement('br'))
+
+    let spanAddress = document.createElement('span');
+    spanAddress.classList.add('form-span')
+    let labelAddress = document.createElement('label');
+    labelAddress.innerHTML = `<b>${fieldNames['address']}:</b>`;
+    let inputAddress = document.createElement('input');
+    inputAddress.type = 'text';
+    inputAddress.id = 'inputAddress';
+    spanAddress.append(labelAddress,document.createElement('br'),inputAddress)
+
+    form.append(spanAddress,document.createElement('br'))
 
 
     let spanSubmit = document.createElement('center');
@@ -233,16 +383,40 @@ function buildForm(){
     inputSubmit.onclick = submitForm
     spanSubmit.append(inputSubmit)
 
-    form.append(spanSubmit)
+    form.append(document.createElement('br'),spanSubmit,document.createElement('br'))
 
     return form
 
 }
 
+function buildDescription(){
+    let description = ''
+    description += currentParameters.ex_name.length > 0 ? `Notes (ex-name): ${currentParameters.ex_name}<br>` : '';
+    description += currentParameters.office_Size.length > 0 ? `Office Size: ${office_Size}<br>` : '';
+    description += currentParameters.country.length > 0 ? `Country: ${currentParameters.country}<br>` : '';
+    description += currentParameters.category.length > 0 ? `Category: ${currentParameters.category}<br>` : '';
+    description += currentParameters.focus.length > 0 ? `Focus: ${currentParameters.focus}<br>` : '';
+    description += currentParameters.website.length > 0 ? `Website: <a href="${currentParameters.website}"${currentParameters.website}</a><br>` : '';
+    description += currentParameters.city.length > 0 ? `City: ${currentParameters.city}<br>` : '';
+    description += currentParameters.address.length > 0 ? `Address: ${currentParameters.address}<br>` : '';
+    
+    return description
+
+}
+
 function submitForm(){
-    currentParameters.name = document.getElementById('inputName').value 
+    currentParameters.name = document.getElementById('inputName').value;
     currentParameters.lon = currentLngLat.lng ? currentLngLat.lng : 0.0;
     currentParameters.lat = currentLngLat.lat ?  currentLngLat.lat : 0.0;
+    currentParameters.ex_name = document.getElementById('inputExName').value;
+    currentParameters.office_Size = document.querySelector('#inputOffice').value;
+    currentParameters.category = document.querySelector('#inputCategory').value;
+    currentParameters.website = document.getElementById('inputWebsite').value;
+    currentParameters.focus = document.getElementById('inputFocus').value;
+    currentParameters.country = document.getElementById('inputCountry').value;
+    currentParameters.city = document.getElementById('inputCity').value;
+    currentParameters.address = document.getElementById('inputAddress').value;
+    currentParameters.description = buildDescription()
     
     
     let urlParams = "?";
