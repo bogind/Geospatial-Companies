@@ -57,6 +57,25 @@ class AddCompanyButton {
     }
   }
 
+class ShareButton {
+    onAdd(map){
+      this.map = map;
+      this.container = document.createElement('div');
+      this.container.className = 'share-control maplibregl-ctrl maplibregl-ctrl-group mapboxgl-ctrl mapboxgl-ctrl-group';
+      this.container.innerHTML = '<i class="fg-map-share-alt fg-2x" style="color:#fff;"></i>';
+      this.container.title = 'Share this map'
+      this.container.value = 0;
+      this.container.addEventListener("click", toggleShare);
+      this.container.addEventListener("mouseover", toggleShare);
+      this.container.addEventListener("mouseout", toggleShare);
+      return this.container;
+    }
+    onRemove(){
+      this.container.parentNode.removeChild(this.container);
+      this.map = undefined;
+    }
+  }
+
 class AddCompanyControl {
 
     onAdd(map){
@@ -77,3 +96,4 @@ class AddCompanyControl {
 let legendControl = new LegendControl();
 let addCompanyButton = new AddCompanyButton();
 let addCompanyControl = new AddCompanyControl();
+let shareButton = new ShareButton();

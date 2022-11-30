@@ -24,8 +24,12 @@ let map = new maplibregl.Map({
     ]
     },
     center: [0, 40], // starting position
-    zoom: 3 // starting zoom
-});
+    zoom: 3, // starting zoom
+    attributionControl: false
+})
+.addControl(new maplibregl.AttributionControl({
+    compact: true
+    }));
 
 map.on('load', () => {
     loadLayer()
@@ -39,3 +43,4 @@ function loadLayer(){
 
 map.addControl(legendControl,'top-left');
 map.addControl(addCompanyButton,'top-right');
+map.addControl(shareButton,'bottom-left')

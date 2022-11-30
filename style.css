@@ -13,7 +13,9 @@
 .legend h4 {
     margin: 0 0 10px;
 }
-    
+.mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact{
+    max-width: 70vw;
+}
 .legend div span {
     border-radius: 50%;
     display: inline-block;
@@ -33,6 +35,55 @@
 .add-control {
     padding: 5px;
 }
+.share-control {
+    width: 30px;
+    padding: 3px;
+    padding-top: 6px;
+    background-color: rgb(56, 42, 191);
+    text-align: center;
+    
+}
+.share-control > i{
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+.share-control> span > a:hover {
+    background-color: rgba(56, 42, 191, 0.75);  
+}
+.share-control > button{
+    line-height: 12px;
+    text-align: center;
+    text-decoration: none;    
+}
+.share-control > span  {
+    padding-top: 10px;
+    margin-top: 10px;
+    cursor: default;
+    
+}
+.share-control > span > a {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.share-control > span > a > img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.share-control > span > i {
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+.share-control > span > i > img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
 .form-span{
     margin: 3px;
     line-height: 1em;
