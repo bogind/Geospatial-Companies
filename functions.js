@@ -1,6 +1,7 @@
 function addSourceAndLayer(geojson){
     map.addSource('companies', {
         'type': 'geojson',
+        'attribution': 'Data collected by <u><a href="https://github.com/chrieke/awesome-geospatial-companies">Christoph Reike</a></u>, <u><a href="https://docs.google.com/spreadsheets/d/1pQQfcpPsh2EIJxCamAsL8B4c_GI8BaT-r8LCNckuE5w/edit?usp=sharing">Contributions are welcome</a></u>',
         'data': geojson
     });
     map.addLayer({
