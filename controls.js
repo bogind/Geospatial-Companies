@@ -66,8 +66,6 @@ class ShareButton {
       this.container.title = 'Share this map'
       this.container.value = 0;
       this.container.addEventListener("click", toggleShare);
-      this.container.addEventListener("mouseover", toggleShare);
-      this.container.addEventListener("mouseout", toggleShare);
       return this.container;
     }
     onRemove(){
