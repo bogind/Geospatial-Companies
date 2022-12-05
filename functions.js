@@ -159,8 +159,9 @@ function getMapclick(e){
         inputlat.value = currentParameters.lat
         currentParameters.lon = currentLngLat.lng
         inputlon.value = currentParameters.lon
-        let inputClick = document.querySelector('.fg-pushpin')
-        inputClick.style.color = '#800'
+        let inputClick = document.getElementById('inputClick');
+        inputClick.classList.remove('fg-spin');
+        inputClick.children[0].style.color = '#800';
 
         
     };
@@ -168,6 +169,8 @@ function getMapclick(e){
 
 function addPointLocation(){
     // tell map to wait for next click
+    let inputClick = document.getElementById('inputClick');
+    inputClick.classList.add('fg-spin');
     waitForClick=1
 }
 
@@ -189,7 +192,7 @@ function buildForm(){
     let spanClick = document.createElement('center');
     spanClick.classList.add('form-span')
     let labelClick = document.createElement('label');
-    labelClick.innerHTML = `<b>${fieldNames['name']}:</b>`;
+    labelClick.innerHTML = `<b>Location:</b>`;
     let inputClick = document.createElement('button');
     inputClick.type = 'button';
     inputClick.id = 'inputClick';
@@ -197,7 +200,7 @@ function buildForm(){
     inputClick.onclick = addPointLocation
     spanClick.append(labelClick,document.createElement('br'),inputClick)
 
-    form.append(spanClick,document.createElement('br'))
+    form.append(document.createElement('br'),spanClick,document.createElement('br'))
 
     let spanlat = document.createElement('span');
     spanlat.classList.add('form-span')
