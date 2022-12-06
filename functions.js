@@ -1,6 +1,9 @@
 function addSourceAndLayer(geojson){
     map.addSource('companies', {
         'type': 'geojson',
+        'attribution': `Data collected by <u><a href="https://github.com/chrieke/awesome-geospatial-companies">Christoph Reike</a></u>.<br>\
+        Contributions and comment are welcome at <u><a href="https://docs.google.com/spreadsheets/d/1pQQfcpPsh2EIJxCamAsL8B4c_GI8BaT-r8LCNckuE5w/edit?usp=sharing">Google Sheets</a></u>.<br>\
+        Data available directly as <u><a href="${layerUrl}">GeoJSON</a></u>.`,
         'data': geojson
     });
     map.addLayer({
@@ -201,6 +204,7 @@ function ToggleForm(){
 }
 
 function getMapclick(e){
+    document.getElementsByClassName('share-control')[0].innerHTML = '<i class="fg-map-share fg-2x" style="color:#fff;"></i>';
     // if after use of add point button, then get coords and open form
     if(waitForClick===1){
         waitForClick=0;
@@ -456,7 +460,66 @@ function buildDescription(){
     return description
 
 }
+function buildShareSpan(){
+    let container = document.createElement('span');
 
+    let twitterButton = document.createElement('a');
+    twitterButton.href = 'https://twitter.com/intent/tweet?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.github.io/Geospatial-Companies/';
+    twitterButton.target="_blank" ;
+    twitterButton.rel="noopener noreferrer";
+    twitterButton.title = "Share to Twitter";
+    let twitterImage = document.createElement('img');
+    twitterImage.src = 'icons/Twitter social icons - circle - white.png';
+    twitterButton.append(twitterImage)
+
+    let facebookButton = document.createElement('a');
+    facebookButton.href = 'https://www.facebook.com/sharer/sharer.php?u=https://bogind.github.io/Geospatial-Companies/&t=Geospatial%20Companies%20Map';
+    facebookButton.target="_blank" ;
+    facebookButton.rel="noopener noreferrer";
+    facebookButton.title = "Share to Facebook";
+    let facebookImage = document.createElement('img');
+    facebookImage.src = 'icons/f_logo_RGB-White_58.png';
+    facebookButton.append(facebookImage)
+
+    let whatsappButton = document.createElement('a');
+    whatsappButton.href = 'https://wa.me?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.github.io/Geospatial-Companies/"';
+    whatsappButton.target="_blank" ;
+    whatsappButton.rel="noopener noreferrer";
+    whatsappButton.title = "Share to Whatsapp";
+    let whatsappImage = document.createElement('img');
+    whatsappImage.src = 'icons/Digital_Glyph_White.png';
+    whatsappButton.append(whatsappImage)
+
+    let copyURLButton = document.createElement('i');
+    //copyURLButton.type = 'button'
+    copyURLButton.onclick = function(){
+        navigator.clipboard.writeText("https://bogind.github.io/Geospatial-Companies/")
+    }
+    copyURLButton.title = "Copy to clipboard";
+    let copyURLImage = document.createElement('img');
+    copyURLImage.src = 'icons/icons8-copy-24.png';
+    copyURLButton.append(copyURLImage)
+    
+
+    container.append(twitterButton,facebookButton,whatsappButton,copyURLButton)
+    return container
+}
+function toggleShare(e){
+    let control = document.getElementsByClassName('share-control')[0];
+    /*if(e.type == 'mouseover'){
+        control.innerHTML = ''
+        control.append(buildShareSpan())
+    }else if(e.type == 'mouseout'){
+        control.innerHTML = '<i class="fg-map-share-alt fg-2x" style="color:#fff;"></i>';
+    }else if(e.type == 'click'){*/
+        if(control.value == 0){
+            control.innerHTML = ''
+            control.append(buildShareSpan())
+        }else{
+            control.innerHTML = '<i class="fg-map-share-alt fg-2x" style="color:#fff;"></i>';
+        }
+    //}
+}
 function submitForm(){
     currentParameters.type = 'add';
     currentParameters.name = document.getElementById('inputName').value;
