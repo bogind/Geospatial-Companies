@@ -322,33 +322,33 @@ function buildForm(){
     
     let optionL = document.createElement('option');
     optionL.value = 'L'
-    optionL.innerText = 'L'
+    optionL.innerText = 'L (100 < employees)'
     let optionLB = document.createElement('option');
     optionLB.value = 'L (B)'
-    optionLB.innerText = 'L (B)'
+    optionLB.innerText = 'L (100 < employees) - Branch'
     let optionLH = document.createElement('option');
     optionLH.value = 'L (H)'
-    optionLH.innerText = 'L (H)'
+    optionLH.innerText = 'L (100 < employees) - Headquarters'
 
     let optionM = document.createElement('option');
     optionM.value = 'M'
-    optionM.innerText = 'M'
+    optionM.innerText = 'M (20-100 employees)'
     let optionMB = document.createElement('option');
     optionMB.value = 'M (B)'
-    optionMB.innerText = 'M (B)'
+    optionMB.innerText = 'M (20-100 employees) - Branch'
     let optionMH = document.createElement('option');
     optionMH.value = 'M (H)'
-    optionMH.innerText = 'M (H)'
+    optionMH.innerText = 'M (20-100 employees) - Headquarters'
 
     let optionS = document.createElement('option');
     optionS.value = 'S'
-    optionS.innerText = 'S'
+    optionS.innerText = 'S (20 > employees)'
     let optionSB = document.createElement('option');
     optionSB.value = 'S (B)'
-    optionSB.innerText = 'S (B)'
+    optionSB.innerText = 'S (20 > employees) - Branch'
     let optionSH = document.createElement('option');
     optionSH.value = 'S (H)'
-    optionSH.innerText = 'S (H)'
+    optionSH.innerText = 'S (20 > employees) - Headquarters'
     inputOffice.append(optionL,optionLB,optionLH,
         optionM,optionMB,optionMH,
         optionS,optionSB,optionSH)
@@ -478,6 +478,7 @@ function buildForm(){
 
             // clear the imgPreview div and append the new image
             imgPreview.innerHTML = "";
+            imgPreview.style.height = "100px";
             imgPreview.appendChild(img);
             imgPreview.appendChild(document.createElement('br'));
         } catch (err) {

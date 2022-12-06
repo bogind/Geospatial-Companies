@@ -108,7 +108,7 @@ i {
     
     position: relative;
     width: 95%;
-    height: 100px;
+    height: 0px;
     max-height: 100px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -123,6 +123,7 @@ i {
     background-position: center;
     background-repeat: no-repeat;
     width: 95%;
+    height: inherit;
     float: left;
     position: absolute;
     top: 0;
@@ -148,10 +149,13 @@ i {
 form{
     max-height: 80vh;
     overflow-x: auto;
-    width: 18vw;
+    width: 22vw;
     overflow-y: scroll;
     scrollbar-color: #ccc;
     scrollbar-width: thin;
+}
+.form-span input{
+    width: 90%;
 }
 @media screen and (max-width: 420px) {
     form{
