@@ -218,6 +218,13 @@ function getMapclick(e){
         inputlat.value = currentParameters.lat
         currentParameters.lon = currentLngLat.lng
         inputlon.value = currentParameters.lon
+        if(isMobile){
+            let forms = document.getElementsByClassName('company-form')
+            if(forms.length > 0){
+                let form = forms[0]
+                form.style.display = 'block'
+            }
+        }
         let inputClick = document.getElementById('inputClick');
         inputClick.classList.remove('fg-spin');
         inputClick.children[0].style.color = '#800';
@@ -230,12 +237,20 @@ function addPointLocation(){
     // tell map to wait for next click
     let inputClick = document.getElementById('inputClick');
     inputClick.classList.add('fg-spin');
+    if(isMobile){
+        let forms = document.getElementsByClassName('company-form')
+        if(forms.length > 0){
+            let form = forms[0]
+            form.style.display = 'none'
+        }
+    }
     waitForClick=1
 }
 
 function buildForm(){
     
-    let form = document.createElement('form')
+    let form = document.createElement('form');
+    form.className = 'company-form'
 
     let spanName = document.createElement('span');
     spanName.classList.add('form-span')

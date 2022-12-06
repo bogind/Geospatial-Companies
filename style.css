@@ -145,3 +145,23 @@ i {
     margin-right: auto;
     display: block;
 }
+form{
+    max-height: 80vh;
+    overflow-x: auto;
+    width: 18vw;
+    overflow-y: scroll;
+    scrollbar-color: #ccc;
+    scrollbar-width: thin;
+}
+@media screen and (max-width: 420px) {
+    form{
+        max-height: 70vh;
+        overflow-x: auto;
+        width: 80vw;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+    }
+    .form-span input[type="text"]{
+        width: 90%;
+    }
+}

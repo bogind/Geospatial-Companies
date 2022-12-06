@@ -2,6 +2,7 @@ const layerUrl = "https://script.google.com/macros/s/AKfycbwMj3p--L1h57PB_b1TUF1
 let hoveredStateId = null;
 let waitForClick = 0;
 let currentLngLat;
+const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 let map = new maplibregl.Map({
     container: 'map', // container id
     style: {
