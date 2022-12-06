@@ -41,3 +41,14 @@
 .maplibregl-popup-content > h2{
     margin-top: 5px;
 }
+.open-edit-button{
+    border: 0;
+    background-color: #fff;
+    cursor: pointer;
+}
+i {
+    color: #666;
+}
+.open-edit-button:hover i{
+    color: #800;
+}

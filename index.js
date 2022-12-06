@@ -1,6 +1,7 @@
 const layerUrl = "https://script.google.com/macros/s/AKfycbwMj3p--L1h57PB_b1TUF1h-fYgMZGRYaHaSBmQ6_3ZyzL2jT8lqCwhB-b-obgRFwgZbg/exec"
 let hoveredStateId = null;
 let waitForClick = 0;
+let currentLngLat;
 let map = new maplibregl.Map({
     container: 'map', // container id
     style: {

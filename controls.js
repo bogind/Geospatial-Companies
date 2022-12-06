@@ -74,6 +74,24 @@ class AddCompanyControl {
   }
 }
 
+class EditCompanyControl {
+
+  onAdd(map){
+      this.map = map;
+      this.container = document.createElement('div');
+      this.container.className = 'add-control mapboxgl-ctrl-group maplibregl-ctrl mapboxgl-ctrl';
+  
+      let form = buildForm()
+      this.container.append(form)
+      return this.container;
+  }
+onRemove(){
+  this.container.parentNode.removeChild(this.container);
+  this.map = undefined;
+}
+}
+
 let legendControl = new LegendControl();
 let addCompanyButton = new AddCompanyButton();
-let addCompanyControl = new AddCompanyControl();
+let editCompanyControl = new EditCompanyControl();
+let addCompanyControl = new EditCompanyControl();

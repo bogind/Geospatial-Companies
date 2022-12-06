@@ -81,7 +81,6 @@ function addEvents(){
     map.on('click', 'companies', (e) => {
         const feature = e.features[0]
         const coordinates = feature.geometry.coordinates.slice();
-        console.log(feature)
         let description = '';
         description += (feature.properties.Name && feature.properties.Name.length >0) ? `<h2>${feature.properties.Name}</h2>` :'';
         description += (feature.properties.Notes__ex_name_ && feature.properties.Notes__ex_name_.length >0) ? `<b>Notes (ex-name):</b> ${feature.properties.Notes__ex_name_}<br>` :'';
@@ -92,6 +91,7 @@ function addEvents(){
         description += (feature.properties.Website && feature.properties.Website.length >0) ? `<b>Website:</b> <a href="${feature.properties.Website}">${feature.properties.Website}</a><br>` :'';
         description += (feature.properties.City && feature.properties.City.length >0) ? `<b>City:</b> ${feature.properties.City}<br>` :'';
         description += (feature.properties.Address && feature.properties.Address.length >0) ? `<b>Address:</b> ${feature.properties.Address}<br>` :'';
+        description += suggestEditButton()
 
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -100,6 +100,9 @@ function addEvents(){
     new maplibregl.Popup()
         .setLngLat(coordinates)
         .setHTML(description)
+        .on('open', function(){
+            attachEditEvent(feature);
+            })
         .addTo(map);
     });
         
@@ -114,6 +117,7 @@ function refreshData(){
 }
 
 let currentParameters ={
+    type:'add',
     name:'',
     lat:0.0,
     lon:0.0,
@@ -140,6 +144,52 @@ const fieldNames = {
     website:'Website',
     city:'City',
     address:'Address'
+}
+
+function attachEditEvent(feature){
+    let openEditButton = document.getElementById('openEditControl')
+    openEditButton.feature = feature;
+    openEditButton.onclick = openEditForm
+}
+function openEditForm(){
+    let openEditButton = document.getElementById('openEditControl')
+    let feature = openEditButton.feature;
+    console.log(feature)
+    ToggleForm()
+    if(map.hasControl(addCompanyControl)){
+        document.getElementById('inputName').value = feature.properties.Name;
+        document.getElementById('inputClick').children[0].style.color = '#800';
+        document.getElementById('inputlat').value = feature.geometry.coordinates[1];
+        document.getElementById('inputlon').value = feature.geometry.coordinates[0];
+        currentParameters.lat = feature.geometry.coordinates[1]
+        currentParameters.lon = feature.geometry.coordinates[0];
+        document.getElementById('inputExName').value = feature.properties.Notes__ex_name_;
+        document.getElementById('inputOffice').value = feature.properties.Office_Size;
+        document.getElementById('inputCategory').value = feature.properties.Category;
+        document.getElementById('inputWebsite').value = feature.properties.Website;
+        document.getElementById('inputFocus').value = feature.properties.Focus;
+        document.getElementById('inputCountry').value = feature.properties.Country;
+        document.getElementById('inputCity').value = feature.properties.City;
+        document.getElementById('inputAddress').value = feature.properties.Address;
+        currentParameters.id = feature.properties.id;
+        inputSubmit.onclick = submitComment
+    }
+    
+
+}
+function suggestEditButton(){
+    let spanClick = document.createElement('center');
+    spanClick.classList.add('form-span')
+    let labelClick = document.createElement('label');
+    labelClick.innerHTML = `</br><b>Suggest edits:</b></br>`;
+    let openEditControl = document.createElement('button');
+    openEditControl.type = 'button';
+    openEditControl.className = 'open-edit-button';
+    openEditControl.id = 'openEditControl';
+    openEditControl.innerHTML = '<i class="fg-map-edit fg-2x"></i> ';
+    spanClick.append(labelClick,document.createElement('br'),openEditControl)
+
+    return spanClick.outerHTML
 }
 
 function ToggleForm(){
@@ -196,7 +246,7 @@ function buildForm(){
     let inputClick = document.createElement('button');
     inputClick.type = 'button';
     inputClick.id = 'inputClick';
-    inputClick.innerHTML = '<i class="fg-pushpin fg-rotate20 fg-2x" style="color:#666;"></i> ';
+    inputClick.innerHTML = '<i class="fg-pushpin fg-rotate20 fg-2x"></i> ';
     inputClick.onclick = addPointLocation
     spanClick.append(labelClick,document.createElement('br'),inputClick)
 
@@ -395,7 +445,7 @@ function buildForm(){
 function buildDescription(){
     let description = ''
     description += currentParameters.ex_name.length > 0 ? `Notes (ex-name): ${currentParameters.ex_name}<br>` : '';
-    description += currentParameters.office_Size.length > 0 ? `Office Size: ${office_Size}<br>` : '';
+    description += currentParameters.office_Size.length > 0 ? `Office Size: ${currentParameters.office_Size}<br>` : '';
     description += currentParameters.country.length > 0 ? `Country: ${currentParameters.country}<br>` : '';
     description += currentParameters.category.length > 0 ? `Category: ${currentParameters.category}<br>` : '';
     description += currentParameters.focus.length > 0 ? `Focus: ${currentParameters.focus}<br>` : '';
@@ -408,6 +458,7 @@ function buildDescription(){
 }
 
 function submitForm(){
+    currentParameters.type = 'add';
     currentParameters.name = document.getElementById('inputName').value;
     currentParameters.lon = currentLngLat.lng ? currentLngLat.lng : 0.0;
     currentParameters.lat = currentLngLat.lat ?  currentLngLat.lat : 0.0;
@@ -441,4 +492,39 @@ function submitForm(){
         map.removeControl(addCompanyControl);
         refreshData()
         }
+}
+
+function submitComment(){
+    
+    currentParameters.name = document.getElementById('inputName').value;
+    currentParameters.ex_name = document.getElementById('inputExName').value;
+    currentParameters.office_Size = document.querySelector('#inputOffice').value;
+    currentParameters.category = document.querySelector('#inputCategory').value;
+    currentParameters.website = document.getElementById('inputWebsite').value;
+    currentParameters.focus = document.getElementById('inputFocus').value;
+    currentParameters.country = document.getElementById('inputCountry').value;
+    currentParameters.city = document.getElementById('inputCity').value;
+    currentParameters.address = document.getElementById('inputAddress').value;
+    currentParameters.description = buildDescription();
+    let commentParameters = {'id':currentParameters.id, 'comment':JSON.stringify(currentParameters)}
+    
+    
+    let urlParams = "?";
+    urlParams += `id=${currentParameters.id}&`;
+    urlParams += 'type=comment&';
+    urlParams += `comment=${JSON.stringify(currentParameters)}`;
+
+    let url = layerUrl + urlParams
+    
+    fetch(url, {
+        method: 'POST',
+        redirect: 'follow'
+        })
+
+    if(map.hasControl(addCompanyControl)){
+        map.removeControl(addCompanyControl);
+        refreshData()
+        }
+
+    
 }
