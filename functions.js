@@ -85,6 +85,8 @@ function addEvents(){
         const feature = e.features[0]
         const coordinates = feature.geometry.coordinates.slice();
         let description = '';
+        console.log(feature)
+        description += (feature.properties.Logo && feature.properties.Logo.length >0) ? `<img class='logo-image' src="${feature.properties.Logo}" />` : '';
         description += (feature.properties.Name && feature.properties.Name.length >0) ? `<h2>${feature.properties.Name}</h2>` :'';
         description += (feature.properties.Notes__ex_name_ && feature.properties.Notes__ex_name_.length >0) ? `<b>Notes (ex-name):</b> ${feature.properties.Notes__ex_name_}<br>` :'';
         description += (feature.properties.Office_Size && feature.properties.Office_Size.length >0) ? `<b>Office Size:</b> ${feature.properties.Office_Size}<br>` :'';
@@ -174,6 +176,9 @@ function openEditForm(){
         document.getElementById('inputCountry').value = feature.properties.Country;
         document.getElementById('inputCity').value = feature.properties.City;
         document.getElementById('inputAddress').value = feature.properties.Address;
+        document.getElementById('inputImage').value = feature.properties.Logo;
+        const e = new Event("change");
+        document.getElementById('inputImage').dispatchEvent(e);
         currentParameters.id = feature.properties.id;
         inputSubmit.onclick = submitComment
     }
@@ -430,6 +435,44 @@ function buildForm(){
 
     form.append(spanAddress,document.createElement('br'))
 
+    let spanImage = document.createElement('span');
+    spanImage.classList.add('form-span');
+    let labelImage = document.createElement('label');
+    labelImage.innerHTML = `<b>Logo URL:</b>`;
+    let inputImage = document.createElement("input");
+    inputImage.type = "text";
+    inputImage.id = "inputImage";
+    inputImage.pattern = "https?://.+"; // regex to match valid URLs
+    
+
+    const imgPreview = document.createElement("div");
+    imgPreview.className = "imgPreview form-span"
+
+    inputImage.addEventListener("change", async () => {
+    // check if the input value is a valid URL
+    if (!inputImage.validity.valid) return;
+
+        try {
+            // check if the URL returns an image
+            //const res = await fetch(inputImage.value);
+            //if (!res.headers.get("content-type").startsWith("image/")) return;
+
+            // create an image element and set its src to the URL
+            const img = document.createElement("img");
+            img.src = inputImage.value;
+
+            // clear the imgPreview div and append the new image
+            imgPreview.innerHTML = "";
+            imgPreview.appendChild(img);
+            imgPreview.appendChild(document.createElement('br'));
+        } catch (err) {
+            // handle error
+        }
+    });
+    spanImage.append(labelImage,document.createElement('br'),inputImage)
+
+    form.append(spanImage,imgPreview)
+
 
     let spanSubmit = document.createElement('center');
     spanSubmit.classList.add('form-span')
@@ -534,6 +577,7 @@ function submitForm(){
     currentParameters.city = document.getElementById('inputCity').value;
     currentParameters.address = document.getElementById('inputAddress').value;
     currentParameters.description = buildDescription()
+    currentParameters.logo_url = document.getElementById('inputImage').value
     
     
     let urlParams = "?";
@@ -569,7 +613,7 @@ function submitComment(){
     currentParameters.city = document.getElementById('inputCity').value;
     currentParameters.address = document.getElementById('inputAddress').value;
     currentParameters.description = buildDescription();
-    let commentParameters = {'id':currentParameters.id, 'comment':JSON.stringify(currentParameters)}
+    currentParameters.logo_url = document.getElementById('inputImage').value
     
     
     let urlParams = "?";
