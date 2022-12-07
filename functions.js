@@ -618,7 +618,7 @@ function submitForm(){
 }
 
 function submitComment(){
-    
+    currentParameters.type = "comment";
     currentParameters.name = document.getElementById('inputName').value;
     currentParameters.ex_name = document.getElementById('inputExName').value;
     currentParameters.office_Size = document.querySelector('#inputOffice').value;
