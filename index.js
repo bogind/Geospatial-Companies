@@ -45,5 +45,7 @@ function loadLayer(){
 
 
 map.addControl(legendControl,'top-left');
+//map.addControl(toggleFilterControl,'top-left');
 map.addControl(addCompanyButton,'top-right');
 map.addControl(shareButton,'bottom-left')
+//feather.replace({width:"14px", height:"14px"})
