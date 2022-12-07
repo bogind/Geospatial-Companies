@@ -42,6 +42,26 @@ function addSourceAndLayer(geojson){
             ]
             }
         });
+    map.addLayer({
+        "id": "companies-label",
+        "type": "symbol",
+        "source": "companies",
+        "minzoom": 9.5,
+        "layout": {
+          "text-field": ["get", "Name"],
+          "text-font": ["Roboto Regular"],
+          "icon-allow-overlap": true,
+          "icon-anchor": "center",
+          "text-anchor": "bottom",
+          "text-size": 16,
+          "text-allow-overlap": true,
+          "text-line-height": 1.2
+        },
+        "paint": {
+          "text-halo-color": "rgba(255, 255, 255, 0.89)",
+          "text-halo-width": 1.5
+        }
+      })
     addEvents()
 }
 
