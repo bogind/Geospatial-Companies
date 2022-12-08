@@ -34,6 +34,7 @@
 }
 .add-control {
     padding: 5px;
+    background-color: #ebebeb;
 }
 .share-control {
     width: 30px;
@@ -92,10 +93,16 @@
 .maplibregl-popup-content > h2{
     margin-top: 5px;
 }
+.maplibregl-popup-content {
+    background-color: #ebebeb;
+}
 .open-edit-button{
     border: 0;
-    background-color: #fff;
+    /*background-color: #fff;*/
     cursor: pointer;
+}
+.open-edit-button:hover{
+    background-color: #E1E1E1;
 }
 i {
     color: #666;
@@ -118,7 +125,7 @@ i {
 }
 .imgPreview img {
     object-fit: contain;
-    background-color: #ccc;
+    /*background-color: #ccc;*/
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -141,17 +148,18 @@ i {
 }
 .logo-image {
     width: 95%;
-    background-color: #eee;
+    /*background-color: #eee;*/
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
 form{
+    background-color: #ebebeb;
     max-height: 80vh;
     overflow-x: auto;
     width: 22vw;
     overflow-y: scroll;
-    scrollbar-color: #ccc;
+    scrollbar-color: aliceblue lightgray;
     scrollbar-width: thin;
 }
 .form-span input{
