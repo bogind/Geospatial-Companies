@@ -113,10 +113,13 @@ class ToggleFilterControl {
     this.map = map;
     this.container = document.createElement('div');
     this.container.className = 'toggle-filter-button maplibregl-ctrl maplibregl-ctrl-group mapboxgl-ctrl mapboxgl-ctrl-group';
-    this.container.innerHTML = '<i data-feather="toggle-left"></i><i data-feather="toggle-right"></i>';
-    this.container.title = "Add a Company"
-    this.container.value = 0;
+    this.container.title = "Filter Companies"
+    
+    this.img = document.createElement('img');
+    this.img.src = 'icons/filter.svg'
+
     this.container.onclick = ToggleFilter
+    this.container.append(this.img)
     return this.container;
   }
   onRemove(){

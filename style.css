@@ -169,22 +169,11 @@ form{
     padding: 6px;
     background: white;
 }
-.toggle-filter-button svg {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  
-/* style the first i element */
-.toggle-filter-button svg:first-of-type {
-    position: relative;
-    top: -7px;
-}
-  
-  /* style the second i element */
-.toggle-filter-button svg:last-of-type {
-    position: relative;
-    top: 7px;
+.toggle-filter-button img{
+    display: block;
+    margin:auto;
+    height: 18px;
+    width: 18px;
 }
 .filter-control {
     padding: 10px;

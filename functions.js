@@ -681,10 +681,11 @@ function createFilterForm() {
     // create a close button
     var closeButton = document.createElement('button');
     closeButton.innerHTML = 'X';
-    closeButton.addEventListener('click', function() {
+    closeButton.onclick = ToggleFilter
+    /*closeButton.addEventListener('click', function() {
     // hide the filter control when the close button is clicked
-    filterControl.style.display = 'none';
-    });
+    //filterControl.style.display = 'none';
+    });*/
 
     // add the close button to the filter control
     filterControl.appendChild(closeButton);
@@ -954,7 +955,13 @@ function showSuggestions(input, suggestions) {
   }
   
 function ToggleFilter(){
-    
+    if(map.hasControl(filterControl)){
+        map.removeControl(filterControl);
+        map.addControl(toggleFilterControl,'top-left');
+    }else{
+        map.removeControl(toggleFilterControl);
+        map.addControl(filterControl,'top-left');
+    }
 }
 
 
