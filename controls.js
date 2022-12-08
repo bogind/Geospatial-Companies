@@ -108,7 +108,43 @@ onRemove(){
 }
 }
 
+class ToggleFilterControl {
+  onAdd(map){
+    this.map = map;
+    this.container = document.createElement('div');
+    this.container.className = 'toggle-filter-button maplibregl-ctrl maplibregl-ctrl-group mapboxgl-ctrl mapboxgl-ctrl-group';
+    this.container.innerHTML = '<i data-feather="toggle-left"></i><i data-feather="toggle-right"></i>';
+    this.container.title = "Add a Company"
+    this.container.value = 0;
+    this.container.onclick = ToggleFilter
+    return this.container;
+  }
+  onRemove(){
+    this.container.parentNode.removeChild(this.container);
+    this.map = undefined;
+  }
+}
+
+class FilterControl {
+
+  onAdd(map){
+      this.map = map;
+      this.container = document.createElement('div');
+      this.container.className = 'filter-control mapboxgl-ctrl-group maplibregl-ctrl mapboxgl-ctrl';
+  
+      let form = createFilterForm()
+      this.container.append(form)
+      return this.container;
+  }
+onRemove(){
+  this.container.parentNode.removeChild(this.container);
+  this.map = undefined;
+}
+}
+
 let legendControl = new LegendControl();
 let addCompanyButton = new AddCompanyButton();
 let addCompanyControl = new AddCompanyControl();
+let toggleFilterControl = new ToggleFilterControl();
+let filterControl = new FilterControl()
 let shareButton = new ShareButton();

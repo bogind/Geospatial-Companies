@@ -42,7 +42,28 @@ function addSourceAndLayer(geojson){
             ]
             }
         });
+    map.addLayer({
+        "id": "companies-label",
+        "type": "symbol",
+        "source": "companies",
+        "minzoom": 9.5,
+        "layout": {
+          "text-field": ["get", "Name"],
+          "text-font": ["Roboto Regular"],
+          "icon-allow-overlap": true,
+          "icon-anchor": "center",
+          "text-anchor": "bottom",
+          "text-size": 16,
+          "text-allow-overlap": true,
+          "text-line-height": 1.2
+        },
+        "paint": {
+          "text-halo-color": "rgba(255, 255, 255, 0.89)",
+          "text-halo-width": 1.5
+        }
+      })
     addEvents()
+    populateSuggestions(geojson)
 }
 
 function addEvents(){
@@ -618,7 +639,7 @@ function submitForm(){
 }
 
 function submitComment(){
-    
+    currentParameters.type = "comment";
     currentParameters.name = document.getElementById('inputName').value;
     currentParameters.ex_name = document.getElementById('inputExName').value;
     currentParameters.office_Size = document.querySelector('#inputOffice').value;
@@ -651,3 +672,329 @@ function submitComment(){
 
     
 }
+
+
+function createFilterForm() {
+    // create a div element to hold the filter control
+    var filterControl = document.createElement('div');
+
+    // create a close button
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.addEventListener('click', function() {
+    // hide the filter control when the close button is clicked
+    filterControl.style.display = 'none';
+    });
+
+    // add the close button to the filter control
+    filterControl.appendChild(closeButton);
+
+    // position the close button in the top right corner of the filter control
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = 0;
+    closeButton.style.right = 0;
+  
+    // create a small header
+    var header = document.createElement('h3');
+    header.innerHTML = 'Filter';
+    filterControl.appendChild(header);
+  
+    // create input elements for name, country, and category
+    var nameInput = document.createElement('input');
+    nameInput.id = "nameInput";
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Name';
+    
+    filterControl.appendChild(nameInput);
+  
+    var countryInput = document.createElement('input');
+    countryInput.id = "countryInput";
+    countryInput.type = 'text';
+    countryInput.placeholder = 'Country';
+
+    filterControl.appendChild(countryInput);
+
+    
+
+    
+  
+    var categorySelect = document.createElement('select');
+    categorySelect.id = "categorySelect";
+    categorySelect.multiple = true;
+    categorySelect.size = 6;
+    categorySelect.addEventListener('change', function() {
+        let categoryFilter = getCategoriesFilter()
+        filterPoints(nameInput.value, countryInput.value, categoryFilter);
+    });
+
+    // create options for the select element
+    var digitalFarmingOption = document.createElement('option');
+    digitalFarmingOption.innerHTML = 'Digital Farming';
+    digitalFarmingOption.value = 'Digital Farming';
+    categorySelect.appendChild(digitalFarmingOption);
+
+    var earthObservationOption = document.createElement('option');
+    earthObservationOption.innerHTML = 'Earth Observation';
+    earthObservationOption.value = 'Earth Observation';
+    categorySelect.appendChild(earthObservationOption);
+
+    var gisSpatialAnalysisOption = document.createElement('option');
+    gisSpatialAnalysisOption.innerHTML = 'GIS / Spatial Analysis';
+    gisSpatialAnalysisOption.value = 'GIS / Spatial Analysis';
+    categorySelect.appendChild(gisSpatialAnalysisOption);
+
+    var satelliteOperatorOption = document.createElement('option');
+    satelliteOperatorOption.innerHTML = 'Satellite Operator';
+    satelliteOperatorOption.value = 'Satellite Operator';
+    categorySelect.appendChild(satelliteOperatorOption);
+
+    var uavAerialOption = document.createElement('option');
+    uavAerialOption.innerHTML = 'UAV / Aerial';
+    uavAerialOption.value = 'UAV / Aerial';
+    categorySelect.appendChild(uavAerialOption);
+
+    var webmapCartographyOption = document.createElement('option');
+    webmapCartographyOption.innerHTML = 'Webmap / Cartography';
+    webmapCartographyOption.value = 'Webmap / Cartography';
+    categorySelect.appendChild(webmapCartographyOption);
+
+    // add the select element to the filter control
+    filterControl.appendChild(categorySelect);
+  
+    // hide the filter control by default
+    //filterControl.style.display = 'none';
+
+    // add event listeners to the name and country input elements to handle autocomplete functionality
+    nameInput.addEventListener('input', function() {
+        // filter the suggestions based on the input value
+        let filteredNameSuggestions = filterNameSuggestions(nameInput.value);
+        let categoryFilter = getCategoriesFilter()
+    
+        // show the filtered suggestions
+        if(nameInput.value.length >= 2){
+            showSuggestions(nameInput, filteredNameSuggestions);
+            filterPoints(nameInput.value, countryInput.value, categoryFilter);
+        }else if(nameInput.value.length < 2){
+            suggestionsDiv = document.querySelector('.autocomplete-suggestions');
+            if(suggestionsDiv){
+                suggestionsDiv.parentElement.removeChild(suggestionsDiv);
+            }
+            map.setFilter('companies',null)
+        }
+    });
+
+    countryInput.addEventListener('input', function() {
+        // filter the suggestions based on the input value
+        let filteredCountrySuggestions = filterCountrySuggestions(countryInput.value);
+        let categoryFilter = getCategoriesFilter()
+
+        // show the filtered suggestions
+        if(countryInput.value.length >= 2){
+            showSuggestions(countryInput, filteredCountrySuggestions);
+            filterPoints(nameInput.value, countryInput.value, categoryFilter);
+        }else if(countryInput.value.length < 2){
+            suggestionsDiv = document.querySelector('.autocomplete-suggestions');
+            if(suggestionsDiv){
+                suggestionsDiv.parentElement.removeChild(suggestionsDiv);
+            }
+            map.setFilter('companies',null)
+        }
+        
+    });
+
+    // create a small "clear" button
+    var clearButton = document.createElement('button');
+    clearButton.innerHTML = 'Clear';
+
+    // add an event listener to the "clear" button to clear the input elements
+    clearButton.onclick = clearFilterAndSuggestions;
+
+    // append the "clear" button to the filter control
+    filterControl.appendChild(clearButton);
+  
+    return filterControl;
+  }
+  
+
+function clearFilterAndSuggestions(){
+    nameInput.value = '';
+        countryInput.value = '';
+        categorySelect.selectedIndex = -1;
+        suggestionsDiv = document.querySelector('.autocomplete-suggestions');
+        if(suggestionsDiv){
+            suggestionsDiv.parentElement.removeChild(suggestionsDiv);
+        }
+        map.setFilter('companies',null)
+}
+function getCategoriesFilter(){
+    let selected = document.querySelectorAll('#categorySelect option:checked');
+    let values = Array.from(selected).map(el => el.value);
+    categoryFilter = ['any']
+    values.forEach(category => {
+        categoryFilter.push(['==','Category',category])
+    })
+    return categoryFilter
+}
+
+function filterPoints(name, country, categoryFilter) {
+    // get the name, country, and category filter values
+    var nameFilter = ['==', 'Name', name];
+    var countryFilter = ['==', 'Country', country];
+    
+    // combine the filters
+    var filters = ['all']//, nameFilter, countryFilter, categoryFilter];
+    if(name.length > 0){
+        filters.push(nameFilter)
+    }
+    if(country.length > 0){
+        filters.push(countryFilter)
+    }
+    if(categoryFilter.length > 1){
+        filters.push(categoryFilter)
+    }
+    console.log(filters)
+    // apply the filters to the point layer
+    map.setFilter('companies', filters);
+  }
+
+
+// create arrays to hold the name and country suggestions
+var nameSuggestions = [];
+var countrySuggestions = [];
+
+
+// create a function to populate the suggestions arrays with name and country values from a geojson feature collection
+function populateSuggestions(geojson) {
+  geojson.features.forEach(function(feature) {
+    // add the name and country values to the suggestions arrays
+    nameSuggestions.push(feature.properties.Name.trim());
+    countrySuggestions.push(feature.properties.Country.trim());
+  });
+  nameSuggestions = [...new Set(nameSuggestions)];
+  countrySuggestions = [...new Set(countrySuggestions)];
+}
+
+
+// create a function to filter the name suggestions array based on the input value
+function filterNameSuggestions(inputValue) {
+    return nameSuggestions.filter(function(suggestion) {
+      // return suggestions that contain the input value
+      return suggestion.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
+    });
+  }
+  
+
+  // create a function to filter the country suggestions array based on the input value
+function filterCountrySuggestions(inputValue) {
+    return countrySuggestions.filter(function(suggestion) {
+      // return suggestions that contain the input value
+      return suggestion.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
+    });
+  }
+
+// create a function to show the autocomplete suggestions
+function showSuggestions(input, suggestions) {
+    // check if the suggestions div already exists
+    var suggestionsDiv = input.parentNode.querySelector('.autocomplete-suggestions');
+  
+    // if the suggestions div doesn't exist, create it
+    if (!suggestionsDiv) {
+      suggestionsDiv = document.createElement('div');
+  
+      // add a class to the suggestions div to style it
+      suggestionsDiv.classList.add('autocomplete-suggestions');
+  
+      // create a div element to hold the list of suggestions
+      var suggestionsList = document.createElement('div');
+  
+      // add a class to the suggestions list to style it
+      suggestionsList.classList.add('autocomplete-suggestions-list');
+  
+      // add the suggestions list to the suggestions div
+      suggestionsDiv.appendChild(suggestionsList);
+    }
+  
+    // get the suggestions list within the suggestions div
+    var suggestionsList = suggestionsDiv.querySelector('.autocomplete-suggestions-list');
+  
+    // empty the suggestions list
+    suggestionsList.innerHTML = '';
+  
+    // add the suggestions to the suggestions list
+    suggestions.forEach(function(suggestion, index) {
+      // only show up to 5 suggestions
+      if (index < 5) {
+        // create a button element for the suggestion
+        var button = document.createElement('input');
+        button.type = 'button'
+  
+        // set the inner HTML of the button to the suggestion
+        button.value = suggestion;
+        button.onclick = function(e){
+            input.value = e.target.value;
+            suggestionsDiv = document.querySelector('.autocomplete-suggestions');
+            suggestionsDiv.parentElement.removeChild(suggestionsDiv);
+            let name = document.getElementById('nameInput').value;
+            let country = document.getElementById('countryInput').value;
+            let categoryFilter = getCategoriesFilter()
+            filterPoints(name,country,categoryFilter)
+        }
+  
+        // add the button to the suggestions list
+        suggestionsList.appendChild(button);
+      }
+    });
+  
+    // append the suggestions div after the input element
+    input.parentNode.insertBefore(suggestionsDiv, input.nextSibling);
+  
+    // position the suggestions div below the input element
+    suggestionsDiv.style.top = input.offsetTop + input.offsetHeight + 'px';
+    suggestionsDiv.style.left = input.offsetLeft + 'px';
+  }
+  
+function ToggleFilter(){
+    
+}
+
+
+function zoomToFiltered(){
+    let name = document.getElementById('nameInput').value;
+    let country = document.getElementById('countryInput').value;
+    let selectedCategories = document.querySelectorAll('#categorySelect option:checked');
+    let categories = Array.from(selectedCategories).map(el => el.value);
+
+    let gj = map.getSource('companies').serialize().data;
+    let features = []
+    
+    gj.features.forEach(feature => {
+        let addToBBOX = false;
+        if(name.length > 0){
+            addToBBOX = feature.properties.Name.toLowerCase().indexOf(name.toLowerCase()) !== -1;
+        }
+        if(country.length > 0){
+            addToBBOX = addToBBOX && feature.properties.Country.toLowerCase().indexOf(country.toLowerCase()) !== -1
+        }
+        if(categories.length){
+            addToBBOX = addToBBOX && categories.includes(feature.properties.Category)
+        }
+        if(addToBBOX){
+            features.push(feature)
+        }
+           
+    })
+    let bbox = turf.bbox({
+        "type": "FeatureCollection",
+        "features": features
+      })
+      console.log({
+        "type": "FeatureCollection",
+        "features": features
+      })
+      console.log(bbox)
+      map.fitBounds([[bbox[0],bbox[1]],[bbox[2],bbox[3]]], {
+        maxZoom: 18,
+        padding: {top: 25, bottom:25, left: 25, right: 25}
+    });
+}
+
