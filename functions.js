@@ -130,6 +130,13 @@ function addEvents(){
             attachEditEvent(feature);
             })
         .addTo(map);
+
+        gtag('event', 'popup_open', {
+            'company_name': feature.properties.Name,
+            'company_id': feature.id,
+            'country_name':feature.properties.Country,
+            'category':feature.properties.Category
+          });
     });
         
 }
@@ -970,6 +977,11 @@ function zoomToFiltered(){
     let country = document.getElementById('countryInput').value;
     let selectedCategories = document.querySelectorAll('#categorySelect option:checked');
     let categories = Array.from(selectedCategories).map(el => el.value);
+    gtag('event', 'filtered_zoom', {
+        'company_name': name,
+        'country_name': country,
+        'categories':Array.from(selectedCategories).map(el => el.value).join(',')
+      });
 
     let gj = map.getSource('companies').serialize().data;
     let features = []
