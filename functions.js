@@ -39,33 +39,58 @@ function addSourceAndLayer(geojson){
                         [{zoom: 12, value: "L (H)"}, 12],
 						]
 				},
-          "circle-stroke-color": "#39d1d3",
-          "circle-stroke-opacity": [
+          "circle-stroke-color":[
             "case",
             [
               "boolean",
               ["feature-state", "hover"],
               false
             ],
-            1,
-            0
+            "#39d1d3",
+            [
+                "match",
+                ["get", "Category"],
+                "Digital Farming",
+                "hsl(89,43%,45%)",//"#74ae36",
+                "Earth Observation",
+                "hsl(0,90%,66%)",//"#ff5252",
+                "GIS / Spatial Analysis",
+                "hsl(55,90%,50%)",//"#ffe900",
+                "Satellite Operator",
+                "hsl(0,0%,40%)",//"#757575",
+                "UAV / Aerial",
+                "hsl(201,86%,42%)",//"#048ad1",
+                "Webmap / Cartography",
+                "hsl(29,89%,48%)",//"#f57801",
+                "#ccc"
+              ]
           ],
-          "circle-stroke-width": 1.5,
+          "circle-stroke-opacity": 1,
+          "circle-stroke-width": [
+            "case",
+            [
+              "boolean",
+              ["feature-state", "hover"],
+              false
+            ],
+            2,
+            1.5
+          ],
           "circle-color": [
             "match",
             ["get", "Category"],
             "Digital Farming",
-            "#74ae36",
+            "hsl(89,53%,45%)",//"#74ae36",
             "Earth Observation",
-            "#ff5252",
+            "hsl(0,100%,66%)",//"#ff5252",
             "GIS / Spatial Analysis",
-            "#ffe900",
+            "hsl(55,100%,50%)",//"#ffe900",
             "Satellite Operator",
-            "#757575",
+            "hsl(0,0%,46%)",//"#757575",
             "UAV / Aerial",
-            "#048ad1",
+            "hsl(201,96%,42%)",//"#048ad1",
             "Webmap / Cartography",
-            "#f57801",
+            "hsl(29,99%,48%)",//"#f57801",
             "#ccc"
           ]
         }
