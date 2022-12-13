@@ -54,8 +54,9 @@ function addSourceAndLayer(geojson){
           "icon-anchor": "center",
           "text-anchor": "bottom",
           "text-size": 16,
-          "text-allow-overlap": true,
-          "text-line-height": 1.2
+          "text-allow-overlap": false,
+          "text-line-height": 1.5,
+          "text-variable-anchor": ["bottom","top","left","right"]
         },
         "paint": {
           "text-halo-color": "rgba(255, 255, 255, 0.89)",
