@@ -7,41 +7,69 @@ function addSourceAndLayer(geojson){
         'data': geojson
     });
     map.addLayer({
-        'id': 'companies',
-        'type': 'circle',
-        'source': 'companies',
-        'layout': {},
-        'paint': {
-            // Make circles larger as the user zooms from z12 to z22.
-            'circle-radius': 5,
-            'circle-stroke-color':'#39d1d3',
-            'circle-stroke-opacity': [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1,
-                0
-                ],
-            'circle-stroke-width':1.5,
-            // Color circles by ethnicity, using a `match` expression.
-            'circle-color': [
-            'match',
-            ['get', 'Category'],
-            'Digital Farming',
-            '#74ae36',
-            'Earth Observation',
-            '#ff5252',
-            'GIS / Spatial Analysis',
-            '#ffe900',
-            'Satellite Operator',
-            '#757575',
-            'UAV / Aerial',
-            '#048ad1',
-            'Webmap / Cartography',
-            '#f57801',
-            /* other */ '#ccc'
-            ]
-            }
-        });
+        "id": "companies",
+        "type": "circle",
+        "source": "companies",
+        "layout": {},
+        "paint": {
+			"circle-radius": {
+					"property": "Office_Size",
+                    "type": "categorical",
+					"stops": [
+						[{zoom: 3, value: "S"}, 4],
+                        [{zoom: 3, value: "S (B)"}, 4],
+                        [{zoom: 3, value: "S (H)"}, 4],
+						[{zoom: 3, value: "M"}, 4],
+                        [{zoom: 3, value: "M (B)"}, 4],
+                        [{zoom: 3, value: "M (H)"}, 4],
+						[{zoom: 3, value: "L"}, 4],
+                        [{zoom: 3, value: "L (B)"}, 4],
+                        [{zoom: 3, value: "L (H)"}, 4],
+                        
+						[{zoom: 12, value: "S"}, 5],
+                        [{zoom: 12, value: "S (B)"}, 5],
+                        [{zoom: 12, value: "S (H)"}, 5],
+
+						[{zoom: 12, value: "M"}, 8],
+                        [{zoom: 12, value: "M (B)"}, 8],
+                        [{zoom: 12, value: "M (H)"}, 8],
+
+						[{zoom: 12, value: "L"}, 12],
+                        [{zoom: 12, value: "L (B)"}, 12],
+                        [{zoom: 12, value: "L (H)"}, 12],
+						]
+				},
+          "circle-stroke-color": "#39d1d3",
+          "circle-stroke-opacity": [
+            "case",
+            [
+              "boolean",
+              ["feature-state", "hover"],
+              false
+            ],
+            1,
+            0
+          ],
+          "circle-stroke-width": 1.5,
+          "circle-color": [
+            "match",
+            ["get", "Category"],
+            "Digital Farming",
+            "#74ae36",
+            "Earth Observation",
+            "#ff5252",
+            "GIS / Spatial Analysis",
+            "#ffe900",
+            "Satellite Operator",
+            "#757575",
+            "UAV / Aerial",
+            "#048ad1",
+            "Webmap / Cartography",
+            "#f57801",
+            "#ccc"
+          ]
+        }
+    });
     map.addLayer({
         "id": "companies-label",
         "type": "symbol",
