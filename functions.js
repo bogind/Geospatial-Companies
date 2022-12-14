@@ -431,9 +431,9 @@ function buildForm(){
     let optionSH = document.createElement('option');
     optionSH.value = 'S (H)'
     optionSH.innerText = 'S (20 > employees) - Headquarters'
-    inputOffice.append(optionL,optionLB,optionLH,
+    inputOffice.append(optionS,optionSB,optionSH,
         optionM,optionMB,optionMH,
-        optionS,optionSB,optionSH)
+        optionL,optionLB,optionLH)
 
     spanOffice.append(labelOffice,document.createElement('br'),inputOffice)
 
