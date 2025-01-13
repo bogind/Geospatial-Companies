@@ -605,7 +605,7 @@ function buildShareSpan(){
     let container = document.createElement('span');
 
     let twitterButton = document.createElement('a');
-    twitterButton.href = 'https://twitter.com/intent/tweet?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.github.io/Geospatial-Companies/';
+    twitterButton.href = 'https://twitter.com/intent/tweet?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.com/Geospatial-Companies/';
     twitterButton.target="_blank" ;
     twitterButton.rel="noopener noreferrer";
     twitterButton.title = "Share to Twitter";
@@ -614,7 +614,7 @@ function buildShareSpan(){
     twitterButton.append(twitterImage)
 
     let facebookButton = document.createElement('a');
-    facebookButton.href = 'https://www.facebook.com/sharer/sharer.php?u=https://bogind.github.io/Geospatial-Companies/&t=Geospatial%20Companies%20Map';
+    facebookButton.href = 'https://www.facebook.com/sharer/sharer.php?u=https://bogind.com/Geospatial-Companies/&t=Geospatial%20Companies%20Map';
     facebookButton.target="_blank" ;
     facebookButton.rel="noopener noreferrer";
     facebookButton.title = "Share to Facebook";
@@ -623,7 +623,7 @@ function buildShareSpan(){
     facebookButton.append(facebookImage)
 
     let whatsappButton = document.createElement('a');
-    whatsappButton.href = 'https://wa.me?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.github.io/Geospatial-Companies/"';
+    whatsappButton.href = 'https://wa.me?text=Geospatial%20Companies%20Map%0D%0Ahttps://bogind.com/Geospatial-Companies/"';
     whatsappButton.target="_blank" ;
     whatsappButton.rel="noopener noreferrer";
     whatsappButton.title = "Share to Whatsapp";
@@ -634,7 +634,7 @@ function buildShareSpan(){
     let copyURLButton = document.createElement('i');
     //copyURLButton.type = 'button'
     copyURLButton.onclick = function(){
-        navigator.clipboard.writeText("https://bogind.github.io/Geospatial-Companies/")
+        navigator.clipboard.writeText("https://bogind.com/Geospatial-Companies/")
     }
     copyURLButton.title = "Copy to clipboard";
     let copyURLImage = document.createElement('img');
