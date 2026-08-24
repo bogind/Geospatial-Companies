@@ -170,7 +170,23 @@ function addEvents(){
         description += (feature.properties.Focus && feature.properties.Focus.length >0) ? `<b>Focus:</b> ${feature.properties.Focus}<br>` :'';
         description += (feature.properties.Website && feature.properties.Website.length >0) ? `<b>Website:</b> <a href="${feature.properties.Website}">${feature.properties.Website}</a><br>` :'';
         description += (feature.properties.City && feature.properties.City.length >0) ? `<b>City:</b> ${feature.properties.City}<br>` :'';
-        description += (feature.properties.Address && feature.properties.Address.length >0) ? `<b>Address:</b> ${feature.properties.Address}<br>` :'';
+        description += (feature.properties.City && feature.properties.Address.length >0) ? `<b>Addre  ss:</b> ${feature.properties.Address}<br>` :'';
+        // Add social media links
+        // icon links for social media platforms are read from column names in google sheet eg.facebook_link, twitter_link, linkedin_link, mastodon_link, github_link, youtube_link, instagram_link is read from the properties of the feature object and if the link is not empty then it is added to the description with an icon link to the social media platform
+        description += (feature.properties.facebook_link && feature.properties.facebook_link.length >0) ? `<b>Facebook:</b> <a href="${feature.properties.facebook_link}" target="facebook.com">Visit Page</a><br>` :'<a href="https://facebook.com" target="_blank"> <img src="https://cdn.simpleicons.org/facebook" class="social-icon"/> </a>'
+ 
+        description += (feature.properties.twitter_link && feature.properties.twitter_link.length >0) ? `<b>Twitter:</b> <a href="${feature.properties.twitter_link}" target="twitter.com">Visit Page</a><br>` :'<a href="https://x.com" target="_blank"> <img src="https://cdn.simpleicons.org/x" class="social-icon"/> </a>'
+
+        description += (feature.properties.linkedin_link && feature.properties.linkedin_link.length >0) ? `<b>LinkedIn:</b> <a href="${feature.properties.linkedin_link}" target="linkedin.com">Visit Page</a><br>` :'<a href="https://linkedin.com" target="_blank"> <img src="https://cdn.simpleicons.org/linkedin" class="social-icon"/> </a>'
+
+        description += (feature.properties.mastodon_link && feature.properties.mastodon_link.length >0) ? `<b>Mastodon:</b> <a href="${feature.properties.mastodon_link}" target="mastodon.social" target="_blank">Visit Page</a><br>` :'<a href="https://mastodon.social" target="_blank"> <img src="https://cdn.simpleicons.org/mastodon" class="social-icon"/> </a>'
+
+        description += (feature.properties.github_link && feature.properties.github_link.length >0) ? `<b>Github:</b> <a href="${feature.properties.github_link}" target="github.com" >Visit Page</a><br>` :'<a href="https://github.com" target="_blank"> <img src="https://cdn.simpleicons.org/github" class="social-icon"/> </a>'
+
+        description += (feature.properties.youtube_link && feature.properties.youtube_link.length >0) ? `<b>Youtube:</b> <a href="${feature.properties.youtube_link}" target="youtube.com">Visit Page</a><br>` :'<a href="https://youtube.com" target="_blank"> <img src="https://cdn.simpleicons.org/youtube" class="social-icon"/> </a>'
+
+        description += (feature.properties.instagram_link && feature.properties.instagram_link.length >0) ? `<b>Instagram:</b> <a href="${feature.properties.instagram_link}" target="instagram.com">Visit Page</a><br>` :'<a href="https://instagram.com" target="_blank"> <img src="https://cdn.simpleicons.org/instagram" class="social-icon"/> </a>'
+
         description += suggestEditButton()
 
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -597,6 +613,7 @@ function buildDescription(){
     description += currentParameters.website.length > 0 ? `Website: <a href="${currentParameters.website}"${currentParameters.website}</a><br>` : '';
     description += currentParameters.city.length > 0 ? `City: ${currentParameters.city}<br>` : '';
     description += currentParameters.address.length > 0 ? `Address: ${currentParameters.address}<br>` : '';
+    description += currentParameters.facebook_link.length > 0 ? `Address: ${currentParameters.facebook_link}<br>` : 'facebook.com';
     
     return description
 

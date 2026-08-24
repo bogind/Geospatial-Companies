@@ -153,6 +153,12 @@ i {
     margin-right: auto;
     display: block;
 }
+.social-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
 form{
     background-color: #ebebeb;
     max-height: 80vh;
