@@ -1032,7 +1032,7 @@ function buildSocialMediaLinks(properties) {
 
     socialLinks += properties.linkedin_link?.length > 0
         ? `<b>LinkedIn:</b> <a href="${properties.linkedin_link}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://linkedin.com" target="_blank"><img src="https://cdn.simpleicons.org/linkedin" class="social-icon"/></a>';
+        : '<a href="https://linkedin.com" target="_blank"><img src="https://delivery-p143253-e1476319.adobeaemcloud.com/adobe/assets/urn:aaid:aem:75d8a76e-08d9-4e84-9e10-e87f8d79149d/original/as/brand-inlogo-hero-fg-dsk-v01-2x.png" class="social-icon"/></a>';
 
     socialLinks += properties.mastodon_link?.length > 0
         ? `<b>Mastodon:</b> <a href="${properties.mastodon_link}" target="_blank">Visit Page</a><br>`
