@@ -1,7 +1,7 @@
 function doGet(e) {
     // Will only work when connected to a sheet, otherwise change to 'SpreadsheetApp.openById'
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Geospatial_companies");
-  var range = sheet.getRange("A2:N");
+  var range = sheet.getRange("A2:X");
   var values = range.getValues();
   
   var base_object = {
