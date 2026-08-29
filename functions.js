@@ -1023,32 +1023,29 @@ function buildSocialMediaLinks(properties) {
     let socialLinks = '';
 
     socialLinks += properties.Facebook?.length > 0
-        ? `<b>Facebook:</b> <a href="${properties.Facebook}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://facebook.com" target="_blank"><img src="https://cdn.simpleicons.org/facebook" class="social-icon"/></a>';
+        ? `<a href="${properties.Facebook}" target="_blank"><img src="https://cdn.simpleicons.org/facebook" class="social-icon"/></a>`
+        : '';
 
     socialLinks += properties.Twitter?.length > 0
-        ? `<b>Twitter:</b> <a href="${properties.Twitter}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://x.com" target="_blank"><img src="https://cdn.simpleicons.org/x" class="social-icon"/></a>';
+        ? `<a href="${properties.Twitter}" target="_blank"><img src="https://cdn.simpleicons.org/x" class="social-icon"/></a>`
+        : '';
 
     socialLinks += properties.LinkedIn?.length > 0
-        ? `<b>LinkedIn:</b> <a href="${properties.LinkedIn}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://linkedin.com" target="_blank"><img src="https://delivery-p143253-e1476319.adobeaemcloud.com/adobe/assets/urn:aaid:aem:75d8a76e-08d9-4e84-9e10-e87f8d79149d/original/as/brand-inlogo-hero-fg-dsk-v01-2x.png" class="social-icon"/></a>';
+        ? `<a href="${properties.LinkedIn}" target="_blank"><img src="https://delivery-p143253-e1476319.adobeaemcloud.com/adobe/assets/urn:aaid:aem:75d8a76e-08d9-4e84-9e10-e87f8d79149d/original/as/brand-inlogo-hero-fg-dsk-v01-2x.png" class="social-icon"/></a><br>`
+        : '';
 
     socialLinks += properties.Mastodon?.length > 0
-        ? `<b>Mastodon:</b> <a href="${properties.Mastodon}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://mastodon.social" target="_blank"><img src="https://cdn.simpleicons.org/mastodon" class="social-icon"/></a>';
+        ? `<a href="${properties.Mastodon}" target="_blank"><img src="https://cdn.simpleicons.org/mastodon" class="social-icon"/></a>`
+        : '';
 
     socialLinks += properties.Github?.length > 0
-        ? `<b>Github:</b> <a href="${properties.Github}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://github.com" target="_blank"><img src="https://cdn.simpleicons.org/github" class="social-icon"/></a>';
+        ? `<a href="${properties.Github}" target="_blank"><img src="https://cdn.simpleicons.org/github" class="social-icon"/></a>`:'';
 
     socialLinks += properties.Youtube?.length > 0
-        ? `<b>Youtube:</b> <a href="${properties.Youtube}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://youtube.com" target="_blank"><img src="https://cdn.simpleicons.org/youtube" class="social-icon"/></a>';
+        ? `<a href="${properties.Youtube}" target="_blank"><img src="https://cdn.simpleicons.org/youtube" class="social-icon"/></a>`:'';
 
     socialLinks += properties.Instagram?.length > 0
-        ? `<b>Instagram:</b> <a href="${properties.Instagram}" target="_blank">Visit Page</a><br>`
-        : '<a href="https://instagram.com" target="_blank"><img src="https://cdn.simpleicons.org/instagram" class="social-icon"/></a>';
+        ? `<a href="${properties.Instagram}" target="_blank"><img src="https://cdn.simpleicons.org/instagram" class="social-icon"/></a>`:'';
 
     return socialLinks;
 }
