@@ -1,7 +1,7 @@
 
 # Geospatial Companies
 
-A map showing Geospatial companies, data origanilly collected by [chrieke](https://github.com/chrieke) and a list by countries is available at [https://github.com/chrieke/awesome-geospatial-companies](https://github.com/chrieke/awesome-geospatial-companies).  
+A map showing Geospatial companies, data originally collected by [chrieke](https://github.com/chrieke) and a list by countries is available at [https://github.com/chrieke/awesome-geospatial-companies](https://github.com/chrieke/awesome-geospatial-companies).  
 
 ## <center>[The Live Map](https://bogind.com/Geospatial-Companies/)</center>
 
