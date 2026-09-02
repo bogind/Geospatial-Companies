@@ -1,7 +1,7 @@
 function doGet(e) {
     // Will only work when connected to a sheet, otherwise change to 'SpreadsheetApp.openById'
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Geospatial_companies");
-  var range = sheet.getRange("A2:N");
+  var range = sheet.getRange("A2:X");
   var values = range.getValues();
   
   var base_object = {
@@ -24,7 +24,14 @@ function doGet(e) {
         "Focus": values[i][9],
         "Website": values[i][10],
         "City": values[i][11],
-        "Address": values[i][12]
+        "Address": values[i][12],
+        "Facebook": values[i][17],
+        "Twitter": values[i][18],
+        "LinkedIn": values[i][19],
+        "Mastodon": values[i][20],
+        "Github": values[i][21],
+        "Youtube": values[i][22],
+        "Instagram": values[i][23],
       },
       "geometry": {
         "type": "Point",

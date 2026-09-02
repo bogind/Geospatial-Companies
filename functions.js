@@ -168,9 +168,15 @@ function addEvents(){
         description += (feature.properties.Country && feature.properties.Country.length >0) ? `<b>Country:</b> ${feature.properties.Country}<br>` :'';
         description += (feature.properties.Category && feature.properties.Category.length >0) ? `<b>Category:</b> ${feature.properties.Category}<br>` :'';
         description += (feature.properties.Focus && feature.properties.Focus.length >0) ? `<b>Focus:</b> ${feature.properties.Focus}<br>` :'';
-        description += (feature.properties.Website && feature.properties.Website.length >0) ? `<b>Website:</b> <a href="${feature.properties.Website}">${feature.properties.Website}</a><br>` :'';
+        
         description += (feature.properties.City && feature.properties.City.length >0) ? `<b>City:</b> ${feature.properties.City}<br>` :'';
-        description += (feature.properties.Address && feature.properties.Address.length >0) ? `<b>Address:</b> ${feature.properties.Address}<br>` :'';
+        description += (feature.properties.City && feature.properties.Address.length >0) ? `<b>Addre  ss:</b> ${feature.properties.Address}<br>` :'';
+
+        // Add website link with globe icon if website is present
+        description += buildWebsiteLink(feature.properties);
+        // Add social media links
+        // icon links for social media platforms are read from column names in google sheet eg.facebook_link, twitter_link, linkedin_link, mastodon_link, github_link, youtube_link, instagram_link is read from the properties of the feature object and if the link is not empty then it is added to the description with an icon link to the social media platform
+        description += buildSocialMediaLinks(feature.properties);
         description += suggestEditButton()
 
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -597,6 +603,7 @@ function buildDescription(){
     description += currentParameters.website.length > 0 ? `Website: <a href="${currentParameters.website}"${currentParameters.website}</a><br>` : '';
     description += currentParameters.city.length > 0 ? `City: ${currentParameters.city}<br>` : '';
     description += currentParameters.address.length > 0 ? `Address: ${currentParameters.address}<br>` : '';
+    description += currentParameters.facebook_link.length > 0 ? `Address: ${currentParameters.facebook_link}<br>` : 'facebook.com';
     
     return description
 
@@ -1014,7 +1021,45 @@ function showSuggestions(input, suggestions) {
     suggestionsDiv.style.top = input.offsetTop + input.offsetHeight + 'px';
     suggestionsDiv.style.left = input.offsetLeft + 'px';
   }
-  
+
+function buildWebsiteLink(properties) {
+    if (properties.Website?.length > 0) {
+        return `<a href="${properties.Website}" target="_blank"><img src="icons/web.png" class="social-icon"/></a>`;
+    }
+    return '';
+}
+
+function buildSocialMediaLinks(properties) {
+    let socialLinks = '';
+
+    socialLinks += properties.Facebook?.length > 0
+        ? `<a href="${properties.Facebook}" target="_blank"><img src="https://cdn.simpleicons.org/facebook" class="social-icon"/></a>`
+        : '';
+
+    socialLinks += properties.Twitter?.length > 0
+        ? `<a href="${properties.Twitter}" target="_blank"><img src="https://cdn.simpleicons.org/x" class="social-icon"/></a>`
+        : '';
+
+    socialLinks += properties.LinkedIn?.length > 0
+        ? `<a href="${properties.LinkedIn}" target="_blank"><img src="https://delivery-p143253-e1476319.adobeaemcloud.com/adobe/assets/urn:aaid:aem:75d8a76e-08d9-4e84-9e10-e87f8d79149d/original/as/brand-inlogo-hero-fg-dsk-v01-2x.png" class="social-icon"/></a>`
+        : '';
+
+    socialLinks += properties.Mastodon?.length > 0
+        ? `<a href="${properties.Mastodon}" target="_blank"><img src="https://cdn.simpleicons.org/mastodon" class="social-icon"/></a>`
+        : '';
+
+    socialLinks += properties.Github?.length > 0
+        ? `<a href="${properties.Github}" target="_blank"><img src="https://cdn.simpleicons.org/github" class="social-icon"/></a>`:'';
+
+    socialLinks += properties.Youtube?.length > 0
+        ? `<a href="${properties.Youtube}" target="_blank"><img src="https://cdn.simpleicons.org/youtube" class="social-icon"/></a>`:'';
+
+    socialLinks += properties.Instagram?.length > 0
+        ? `<a href="${properties.Instagram}" target="_blank"><img src="https://cdn.simpleicons.org/instagram" class="social-icon"/></a>`:'';
+
+    return socialLinks;
+}
+
 function ToggleFilter(){
     if(map.hasControl(filterControl)){
         map.removeControl(filterControl);
